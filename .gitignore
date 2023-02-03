@@ -58,3 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+Root Three Unity/RootThree/Library
+Root Three Unity/RootThree/UserSettings
+Root Three Unity/RootThree/Temp
+Root Three Unity/RootThree/Logs
