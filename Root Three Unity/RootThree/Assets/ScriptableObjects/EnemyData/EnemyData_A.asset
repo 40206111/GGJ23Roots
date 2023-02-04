@@ -16,3 +16,4 @@ MonoBehaviour:
   - {fileID: 7030657837119554614, guid: 5b453b08ad1a46348a0be1fb65b0ca48, type: 3}
   - {fileID: 7211332033681411059, guid: 0c49b64631477da459a4d7f712710632, type: 3}
   FallHeight: 3
+  SpawnAttempts: 100

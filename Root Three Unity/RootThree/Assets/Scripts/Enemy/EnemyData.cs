@@ -9,4 +9,6 @@ public class EnemyData : ScriptableObject
 
     public int FallHeight;
 
+    public int SpawnAttempts;
+
 }
