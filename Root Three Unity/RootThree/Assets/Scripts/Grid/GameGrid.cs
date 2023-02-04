@@ -25,18 +25,6 @@ public class GameGrid : MonoBehaviour
             Debug.LogError($"Too many {this.GetType()} instances");
         }
         Instance = this;
-        GenerateGrid();
-    }
-
-    private void Update()
-    {
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log($"Generating new grid {Width}x{Height}");
-            GenerateGrid();
-        }
-#endif
     }
 
     void ClearGrid()
@@ -49,7 +37,7 @@ public class GameGrid : MonoBehaviour
     }
 
 
-    void GenerateGrid()
+    public void GenerateGrid()
     {
         ClearGrid();
         for (int y = 0; y < Width; y++)

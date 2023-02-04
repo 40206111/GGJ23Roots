@@ -21,6 +21,8 @@ public class PlayerMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.State != GameManager.eGameState.Running) return;
+
         if (Camera == null)
         {
             Camera = Camera.main;

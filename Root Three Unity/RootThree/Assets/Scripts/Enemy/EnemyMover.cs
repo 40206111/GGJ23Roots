@@ -35,6 +35,8 @@ public class EnemyMover : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (GameManager.Instance.State != GameManager.eGameState.Running) return;
+
         if (Player == null)
         {
             Player = FindObjectOfType<PlayerMover>();
@@ -67,6 +69,8 @@ public class EnemyMover : MonoBehaviour
         int z = Mathf.RoundToInt(pos.z);
         transform.position = new Vector3(x, pos.y, z);
         GameGrid.Instance.TheGrid[z * GameGrid.Instance.Width + x].Root(this);
+
+        GameManager.Instance.EnemyRooted(this);
 
         Body.constraints |= RigidbodyConstraints.FreezeAll;
     }

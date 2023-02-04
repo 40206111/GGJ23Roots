@@ -7,11 +7,37 @@ public class EnemyManager
 
     EnemyData EnData;
 
-    List<EnemyMover> Enemies = new List<EnemyMover>();
+    public List<EnemyMover> ActiveEnemies = new List<EnemyMover>();
 
     public EnemyManager(EnemyData enData)
     {
         EnData = enData;
+    }
+
+    public IEnumerator<YieldInstruction> DoInfiniteEnemySpawn()
+    {
+        float timePassed = 0;
+        float spawnTime = Random.Range(EnData.MinSpawDelay, EnData.MaxSpawDelay);
+
+        while (GameManager.Instance.State != GameManager.eGameState.Ended)
+        {
+            if (GameManager.Instance.State != GameManager.eGameState.Running)
+            {
+                continue;
+            }
+
+            timePassed += Time.deltaTime;
+
+            if (ActiveEnemies.Count == 0 || timePassed >= spawnTime)
+            {
+                SpawnEnemies(1);
+
+                spawnTime = Random.Range(EnData.MinSpawDelay, EnData.MaxSpawDelay);
+                timePassed = 0;
+            }
+
+            yield return null;
+        }
     }
 
     public void SpawnEnemies(int number)
@@ -100,7 +126,7 @@ public class EnemyManager
 
             EnemyMover newEn = GameObject.Instantiate(EnData.prefabs[enemyId], pos, Quaternion.identity).GetComponent<EnemyMover>();
 
-            Enemies.Add(newEn);
+            ActiveEnemies.Add(newEn);
             break;
 
 
