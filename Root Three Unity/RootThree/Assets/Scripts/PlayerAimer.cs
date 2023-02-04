@@ -29,7 +29,7 @@ public class PlayerAimer : MonoBehaviour
     void Start()
     {
         Timer = ReAimTime;
-        FloorPos = Reticule.position;
+        FloorPos = Reticule.localPosition;
 
         Camera = Camera.main;
     }
