@@ -77,9 +77,10 @@ public class EnemyMover : MonoBehaviour
 
     protected void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Floor"))
+        if (IsSpawnFalling && collision.collider.CompareTag("Floor"))
         {
             IsSpawnFalling = false;
+            Body.constraints = RigidbodyConstraints.FreezePositionY | Body.constraints;
         }
     }
 

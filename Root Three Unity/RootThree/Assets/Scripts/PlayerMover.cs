@@ -12,6 +12,8 @@ public class PlayerMover : MonoBehaviour
     [SerializeField]
     float WalkSpeedPercentage = 0.3f;
 
+    bool Grounded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,5 +44,14 @@ public class PlayerMover : MonoBehaviour
         dir += fromCamRight * Input.GetAxis("Horizontal");
 
         Body.velocity = dir * MoveSpeed * (Input.GetButton("Walk") ? WalkSpeedPercentage : 1f);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!Grounded && collision.collider.CompareTag("Floor"))
+        {
+            Grounded = true;
+            Body.constraints = RigidbodyConstraints.FreezePositionY | Body.constraints;
+        }
     }
 }
