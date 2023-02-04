@@ -13,7 +13,7 @@ public class GameGrid : MonoBehaviour
     [SerializeField] GameObject Tile;
     [SerializeField] List<Material> Colours = new List<Material>();
 
-    List<Tile> TheGrid = new List<Tile>();
+    public List<Tile> TheGrid = new List<Tile>();
 
     CameraResize CameraControl;
 
@@ -52,12 +52,11 @@ public class GameGrid : MonoBehaviour
     void GenerateGrid()
     {
         ClearGrid();
-        float halfWidth = 0;//  Width * 0.5f;
-        for (int x = 0; x < Width; x++)
+        for (int y = 0; y < Width; y++)
         {
-            for (int y = 0; y < Height; y++)
+            for (int x = 0; x < Height; x++)
             {
-                Vector3 pos = new(x - halfWidth, 0, y);
+                Vector3 pos = new(x , 0, y);
                 int matInt = Random.Range(0, Colours.Count);
                 Tile newTile = Instantiate(Tile, pos, Quaternion.identity, transform).GetComponent<Tile>();
                 newTile.SetColour(Colours[matInt]);
@@ -69,4 +68,5 @@ public class GameGrid : MonoBehaviour
         CameraControl?.ResizeCamera(Width, Height);
         GameManager.Instance.GridReadyForPlayer();
     }
+
 }
