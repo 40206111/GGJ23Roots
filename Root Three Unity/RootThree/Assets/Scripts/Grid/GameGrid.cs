@@ -15,8 +15,11 @@ public class GameGrid : MonoBehaviour
 
     List<Tile> TheGrid = new List<Tile>();
 
+    CameraResize CameraControl;
+
     private void Start()
     {
+        CameraControl = Camera.main.GetComponent<CameraResize>();
         if (Instance != null)
         {
             Debug.LogError($"Too many {typeof(GameGrid)} instances");
@@ -60,5 +63,7 @@ public class GameGrid : MonoBehaviour
                 TheGrid.Add(newTile);
             }
         }
+
+        CameraControl?.ResizeCamera(Width, Height);
     }
 }
