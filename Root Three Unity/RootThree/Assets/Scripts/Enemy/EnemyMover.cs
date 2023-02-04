@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum eColours
+{
+    None    =   0,
+    Red     =   1 << 1,
+    Orange  =   1 << 2,
+    Yellow  =   1 << 3,
+    Green   =   1 << 4,
+    Blue    =   1 << 5,
+    Purple  =   1 << 6,
+}
 public class EnemyMover : MonoBehaviour
 {
     protected PlayerMover Player;
@@ -11,6 +21,8 @@ public class EnemyMover : MonoBehaviour
 
     protected bool IsSpawnFalling = true;
     protected bool IsRooted = false;
+
+    public eColours Colour;
 
     // Start is called before the first frame update
     protected virtual void Start()

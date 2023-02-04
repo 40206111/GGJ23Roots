@@ -38,7 +38,7 @@ public class Tile : MonoBehaviour
     {
         List<Tile> connected = new List<Tile>();
         connected.Add(this);
-        MatchedEnemies(ref connected);
+        MatchedEnemies(ref connected, RootedEnemy.Colour);
         if (connected.Count >= 3)
         {
             Debug.Log($"wooh we found a {connected.Count} match!!");
@@ -57,7 +57,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    void MatchedEnemies(ref List<Tile> connections)
+    void MatchedEnemies(ref List<Tile> connections, eColours colour)
     {
         int width = GameGrid.Instance.Width;
         int height = GameGrid.Instance.Height;
@@ -66,29 +66,29 @@ public class Tile : MonoBehaviour
         if (Index % width != 0)
         {
             int checkIndex = Index - 1;
-            CheckIndex(checkIndex, ref connections);
+            CheckIndex(checkIndex, ref connections, colour);
         }
         //up
         if (Index + width < (width * height) - 1)
         {
             int checkIndex = Index + width;
-            CheckIndex(checkIndex, ref connections);
+            CheckIndex(checkIndex, ref connections, colour);
         }
         //right
         if (Index % width != width - 1)
         {
             int checkIndex = Index + 1;
-            CheckIndex(checkIndex, ref connections);
+            CheckIndex(checkIndex, ref connections, colour);
         }
         //down
         if (Index - width > 0)
         {
             int checkIndex = Index - width;
-            CheckIndex(checkIndex, ref connections);
+            CheckIndex(checkIndex, ref connections, colour);
         }
     }
 
-    void CheckIndex(int index, ref List<Tile> connections)
+    void CheckIndex(int index, ref List<Tile> connections, eColours colour)
     {
         Tile neighbour = GameGrid.Instance.TheGrid[index];
         if (neighbour.Index != index)
@@ -97,8 +97,11 @@ public class Tile : MonoBehaviour
         }
         if (!connections.Contains(neighbour) && neighbour.RootedEnemy != null)
         {
-            connections.Add(neighbour);
-            neighbour.MatchedEnemies(ref connections);
+            if (neighbour.RootedEnemy.Colour.HasFlag(colour))
+            {
+                connections.Add(neighbour);
+                neighbour.MatchedEnemies(ref connections, colour);
+            }
         }
     }
 
