@@ -7,9 +7,9 @@ public class GameGrid : MonoBehaviour
     public static GameGrid Instance { get; private set; }
 
     [Range(1, 50)]
-    [SerializeField] int Width;
+    public int Width;
     [Range(1, 50)]
-    [SerializeField] int Height;
+    public int Height;
     [SerializeField] GameObject Tile;
     [SerializeField] List<Material> Colours = new List<Material>();
 
@@ -22,7 +22,7 @@ public class GameGrid : MonoBehaviour
         CameraControl = Camera.main.GetComponent<CameraResize>();
         if (Instance != null)
         {
-            Debug.LogError($"Too many {typeof(GameGrid)} instances");
+            Debug.LogError($"Too many {this.GetType()} instances");
         }
         Instance = this;
         GenerateGrid();
@@ -30,11 +30,13 @@ public class GameGrid : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log($"Generating new grid {Width}x{Height}");
             GenerateGrid();
         }
+#endif
     }
 
     void ClearGrid()
