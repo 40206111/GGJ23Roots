@@ -9,8 +9,11 @@ public class PlayerAimer : MonoBehaviour
     float Timer;
 
     [SerializeField]
+    float AimAssistDegrees = 10f;
+    [SerializeField]
     Transform Reticule;
     Vector3 FloorPos;
+    EnemyMover CurrentTarget;
 
     Vector3 aimDir;
 
@@ -25,6 +28,11 @@ public class PlayerAimer : MonoBehaviour
     void Update()
     {
         Timer += Time.deltaTime;
+
+        if(CurrentTarget != null && Input.GetButtonDown("Jump"))
+        {
+            CurrentTarget.SetRooted(true);
+        }
 
         aimDir.x = Input.GetAxisRaw("HorizontalAim");
         aimDir.z = Input.GetAxisRaw("VerticalAim");
@@ -43,7 +51,7 @@ public class PlayerAimer : MonoBehaviour
             }
 
             EnemyMover[] enemies = FindObjectsByType<EnemyMover>(FindObjectsSortMode.None);
-            float highest = 0.5f;
+            float highest = Mathf.Cos(Mathf.Deg2Rad * AimAssistDegrees);
             EnemyMover chosen = null;
             foreach (EnemyMover e in enemies)
             {
@@ -59,6 +67,7 @@ public class PlayerAimer : MonoBehaviour
             {
                 Reticule.parent = chosen.transform;
                 Reticule.localPosition = FloorPos;
+                CurrentTarget = chosen;
             }
             else
             {
@@ -71,5 +80,6 @@ public class PlayerAimer : MonoBehaviour
     {
         Reticule.parent = null;
         Reticule.position = FloorPos + Vector3.down * 5;
+        CurrentTarget = null;
     }
 }

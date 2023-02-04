@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class EnemyMover : MonoBehaviour
 {
-    PlayerMover Player;
-    Rigidbody Body;
+    protected PlayerMover Player;
+    protected Rigidbody Body;
     [SerializeField]
-    float Speed = 5f;
+    protected float Speed = 5f;
+
+    protected bool IsSpawnFalling = true;
+    protected bool IsRooted = false;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -27,14 +31,31 @@ public class EnemyMover : MonoBehaviour
             }
         }
 
-        Vector3 chase = TargettingDirection();
+        if (!IsRooted && !IsSpawnFalling)
+        {
+            Vector3 chase = TargettingDirection();
 
-        Body.velocity = chase * Speed;
+            Body.velocity = chase * Speed;
+        }
     }
 
     protected virtual Vector3 TargettingDirection()
     {
         return (Player.transform.position - transform.position).normalized;
+    }
+
+    public void SetRooted(bool isRooted)
+    {
+        IsRooted = isRooted;
+        Body.velocity = Vector3.zero;
+    }
+
+    protected void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Floor"))
+        {
+            IsSpawnFalling = false;
+        }
     }
 }
 

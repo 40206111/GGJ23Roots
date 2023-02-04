@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 319877632074777763}
   m_Layer: 0
   m_Name: Tile
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,3 +110,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89ff9322f73854c4b84e80bc9898cb92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Coords: {x: 0, y: 0}
+  Index: 0
