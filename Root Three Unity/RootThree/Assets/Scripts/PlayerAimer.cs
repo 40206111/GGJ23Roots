@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class PlayerAimer : MonoBehaviour
 {
+    Camera Camera;
+
     [SerializeField]
     float ReAimTime = 0.1f;
     float Timer;
-
-    [SerializeField]
-    Transform BeamRoot;
-    [SerializeField]
-    LineRenderer Beam;
-    bool ShootingBeam = false;
 
     [SerializeField]
     float AimAssistDegrees = 10f;
@@ -21,6 +17,12 @@ public class PlayerAimer : MonoBehaviour
     Vector3 FloorPos;
     EnemyMover CurrentTarget;
 
+    [SerializeField]
+    Transform BeamRoot;
+    [SerializeField]
+    LineRenderer Beam;
+    bool ShootingBeam = false;
+
     Vector3 aimDir;
 
     // Start is called before the first frame update
@@ -28,6 +30,8 @@ public class PlayerAimer : MonoBehaviour
     {
         Timer = ReAimTime;
         FloorPos = Reticule.position;
+
+        Camera = Camera.main;
     }
 
     // Update is called once per frame
@@ -47,7 +51,13 @@ public class PlayerAimer : MonoBehaviour
 
         aimDir.x = Input.GetAxisRaw("HorizontalAim");
         aimDir.z = Input.GetAxisRaw("VerticalAim");
+
+        Vector3 camDir = Camera.transform.forward;
+        camDir.y = 0;
+
+        aimDir = Quaternion.Euler(0, Vector3.SignedAngle(Vector3.forward, camDir, Vector3.up), 0) * aimDir;
         aimDir = aimDir.normalized;
+
         if (aimDir == Vector3.zero)
         {
             HideReticule();
@@ -114,21 +124,22 @@ public class PlayerAimer : MonoBehaviour
 
     IEnumerator BeamRoutine(Vector3 targetPos)
     {
+        float beamLength = 1000.0f;
+        float beamSpeed = 60.0f;
         ShootingBeam = true;
         Vector3 startPos = BeamRoot.position;
         Vector3 journey = targetPos - startPos;
         Vector3 journeyDir = journey.normalized;
         float distance = journey.magnitude;
-        float beamLength = 5.0f;
-        float beamSpeed = 40.0f;
-        float journeyTime = distance / beamSpeed;
+        float thisBeamLength = (beamLength > distance ? distance : beamLength);
+        float journeyTime = distance / beamSpeed + thisBeamLength / beamSpeed;
 
         float elapsedTime = 0.0f;
 
         while (true)
         {
-            Beam.SetPosition(0, startPos + journeyDir * Mathf.Clamp(beamSpeed * elapsedTime, 0, distance));
-            Beam.SetPosition(1, startPos + journeyDir * Mathf.Clamp(beamLength + beamSpeed * elapsedTime, 0, distance));
+            Beam.SetPosition(0, startPos + journeyDir * Mathf.Clamp(beamSpeed * elapsedTime - thisBeamLength, 0, distance));
+            Beam.SetPosition(1, startPos + journeyDir * Mathf.Clamp(0.01f + beamSpeed * elapsedTime, 0, distance));
 
             if (elapsedTime >= journeyTime)
             {
