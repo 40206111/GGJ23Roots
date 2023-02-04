@@ -118,7 +118,7 @@ public class PlayerAimer : MonoBehaviour
     void HideReticule()
     {
         Reticule.parent = null;
-        Reticule.position = FloorPos + Vector3.down * 5;
+        Reticule.position = FloorPos + Vector3.down * 0.5f;
         CurrentTarget = null;
     }
 

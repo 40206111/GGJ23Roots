@@ -54,6 +54,7 @@ public class EnemyMover : MonoBehaviour
         transform.position = new Vector3(x, pos.y, z);
         GameGrid.Instance.TheGrid[z * GameGrid.Instance.Width + x].Root(this);
 
+        Body.constraints |= RigidbodyConstraints.FreezeAll;
     }
 
     protected void OnCollisionEnter(Collision collision)
@@ -61,8 +62,6 @@ public class EnemyMover : MonoBehaviour
         if (collision.collider.CompareTag("Floor"))
         {
             IsSpawnFalling = false;
-            if (!IsRooted)
-                SetRooted(true);
         }
     }
 

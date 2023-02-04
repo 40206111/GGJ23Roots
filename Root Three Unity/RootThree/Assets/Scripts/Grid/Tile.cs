@@ -42,11 +42,18 @@ public class Tile : MonoBehaviour
         if (connected.Count >= 3)
         {
             Debug.Log($"wooh we found a {connected.Count} match!!");
-            for (int i = 0; i < connected.Count; i++)
-            {
-                connected[i].RootedEnemy.DefeatEnemy();
-                connected[i].RootedEnemy = null;
-            }
+            StartCoroutine(WaitToDestroy(connected));
+        }
+    }
+
+    IEnumerator WaitToDestroy(List<Tile> connected)
+    {
+        yield return null;
+
+        for (int i = 0; i < connected.Count; i++)
+        {
+            connected[i].RootedEnemy.DefeatEnemy();
+            connected[i].RootedEnemy = null;
         }
     }
 
