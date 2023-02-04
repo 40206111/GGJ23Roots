@@ -5,8 +5,6 @@ using UnityEngine;
 public class CameraResize : MonoBehaviour
 {
     [SerializeField]
-    private float Speed = 1f;
-    [SerializeField]
     private float MoveTime = 1f;
 
     [SerializeField]
@@ -16,15 +14,6 @@ public class CameraResize : MonoBehaviour
     //10x10 (x,y,z) (-2, 7, -2)
     Vector3 Pos1x1 = new Vector3(-1, 2, -1);
     Vector3 TargetPos;
-
-
-    private void Update()
-    {
-        //var pos = transform.position;
-        //pos = Vector3.MoveTowards(pos, TargetPos, Speed);
-        //transform.position = pos;
-
-    }
 
     public void ResizeCamera(int width, int height)
     {
@@ -53,6 +42,7 @@ public class CameraResize : MonoBehaviour
             yield return null;
             timePassed += Time.deltaTime;
         }
+
     }
 
 }

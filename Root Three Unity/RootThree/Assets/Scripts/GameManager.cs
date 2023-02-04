@@ -11,6 +11,11 @@ public class GameManager : MonoBehaviour
     EnemyData TheEnemyData;
     EnemyManager EnMan;
 
+    //Player stuff
+    [SerializeField]
+    GameObject PlayerPrefab;
+    PlayerMover Player;
+
 
     private void Awake()
     {
@@ -35,6 +40,19 @@ public class GameManager : MonoBehaviour
             EnMan.SpawnEnemies(1);
         }
 #endif
+    }
+
+    public void GridReadyForPlayer()
+    {
+        if (Player == null)
+        {
+            Player = Instantiate(PlayerPrefab).GetComponent<PlayerMover>();
+        }
+
+        float halfWidth = (GameGrid.Instance.Width - 1) * 0.5f;
+        float halfHeight = (GameGrid.Instance.Height - 1) * 0.5f;
+
+        Player.transform.position = new Vector3(halfWidth, 0.6f, halfHeight);
     }
 
 }

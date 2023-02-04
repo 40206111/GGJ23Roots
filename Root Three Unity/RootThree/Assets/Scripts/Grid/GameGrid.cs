@@ -67,5 +67,6 @@ public class GameGrid : MonoBehaviour
         }
 
         CameraControl?.ResizeCamera(Width, Height);
+        GameManager.Instance.GridReadyForPlayer();
     }
 }
