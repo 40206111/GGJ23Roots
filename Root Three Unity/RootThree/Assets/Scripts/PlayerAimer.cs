@@ -39,7 +39,7 @@ public class PlayerAimer : MonoBehaviour
     {
         Timer += Time.deltaTime;
 
-        if (CurrentTarget != null && Input.GetButtonDown("Jump"))
+        if (CurrentTarget != null && Input.GetButtonDown("Root"))
         {
             if (!ShootingBeam)
             {

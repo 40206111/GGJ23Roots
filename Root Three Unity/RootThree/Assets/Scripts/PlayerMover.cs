@@ -7,6 +7,11 @@ public class PlayerMover : MonoBehaviour
     Camera Camera;
     Rigidbody Body;
 
+    [SerializeField]
+    float MoveSpeed = 7f;
+    [SerializeField]
+    float WalkSpeedPercentage = 0.3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +30,8 @@ public class PlayerMover : MonoBehaviour
             }
         }
 
-        Vector3 fromCam = transform.position - Camera.transform.position;
+        Vector3 fromCam = Camera.transform.forward;
+        //Vector3 fromCam = transform.position - Camera.transform.position;
         fromCam.y = 0;
         fromCam = fromCam.normalized;
         Vector3 fromCamRight = new Vector3(fromCam.z, 0.0f, -fromCam.x);
@@ -33,6 +39,6 @@ public class PlayerMover : MonoBehaviour
         Vector3 dir = fromCam * Input.GetAxis("Vertical");
         dir += fromCamRight * Input.GetAxis("Horizontal");
 
-        Body.velocity = dir * 10.0f;
+        Body.velocity = dir * MoveSpeed * (Input.GetButton("Walk") ? WalkSpeedPercentage : 1f);
     }
 }
