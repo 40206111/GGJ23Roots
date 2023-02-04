@@ -9,26 +9,32 @@ public class EnemyMover : MonoBehaviour
     [SerializeField]
     float Speed = 5f;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         Body = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        if(Player == null)
+        if (Player == null)
         {
             Player = FindObjectOfType<PlayerMover>();
-            if(Player == null)
+            if (Player == null)
             {
                 Body.velocity = Vector3.zero;
                 return;
             }
         }
 
-        Vector3 chase = (Player.transform.position - transform.position).normalized;
+        Vector3 chase = TargettingDirection();
 
         Body.velocity = chase * Speed;
     }
+
+    protected virtual Vector3 TargettingDirection()
+    {
+        return (Player.transform.position - transform.position).normalized;
+    }
 }
+
