@@ -46,6 +46,7 @@ public class PlayerAimer : MonoBehaviour
                 CurrentTarget.SetRooted(true);
                 Vector3 beamTarget = CurrentTarget.GetComponentInChildren<MeshRenderer>().transform.position;
                 StartCoroutine(BeamRoutine(beamTarget));
+                HideReticule();
             }
         }
 
@@ -76,6 +77,10 @@ public class PlayerAimer : MonoBehaviour
                 EnemyMover chosen = null;
                 foreach (EnemyMover e in enemies)
                 {
+                    if (e.GetIsRooted || e.GetIsSpawnFalling)
+                    {
+                        continue;
+                    }
                     Vector3 toE = (e.transform.position - transform.position).normalized;
                     float testDot = Vector3.Dot(toE, aimDir);
                     if (testDot > highest)
@@ -86,6 +91,7 @@ public class PlayerAimer : MonoBehaviour
                 }
                 if (chosen != null)
                 {
+                    Reticule.gameObject.SetActive(true);
                     Reticule.parent = chosen.transform;
                     Reticule.localPosition = FloorPos;
                     CurrentTarget = chosen;
@@ -120,6 +126,7 @@ public class PlayerAimer : MonoBehaviour
         Reticule.parent = null;
         Reticule.position = FloorPos + Vector3.down * 0.5f;
         CurrentTarget = null;
+        Reticule.gameObject.SetActive(false);
     }
 
     IEnumerator BeamRoutine(Vector3 targetPos)

@@ -20,7 +20,9 @@ public class EnemyMover : MonoBehaviour
     protected float Speed = 5f;
 
     protected bool IsSpawnFalling = true;
+    public bool GetIsSpawnFalling { get { return IsSpawnFalling; } }
     protected bool IsRooted = false;
+    public bool GetIsRooted { get { return IsRooted; } }
 
     public eColours Colour;
 
