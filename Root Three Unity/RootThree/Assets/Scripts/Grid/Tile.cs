@@ -36,56 +36,63 @@ public class Tile : MonoBehaviour
 
     void CheckForAMatch()
     {
-        int count = MatchedEnemies(0, -1);
-        if (count >= 3)
+        List<Tile> connected = new List<Tile>();
+        connected.Add(this);
+        MatchedEnemies(ref connected);
+        if (connected.Count >= 3)
         {
-            Debug.Log($"wooh we found a {count} match!!");
+            Debug.Log($"wooh we found a {connected.Count} match!!");
+            for (int i = 0; i < connected.Count; i++)
+            {
+                connected[i].RootedEnemy.DefeatEnemy();
+                connected[i].RootedEnemy = null;
+            }
         }
     }
 
-    int MatchedEnemies(int current, int prev)
+    void MatchedEnemies(ref List<Tile> connections)
     {
-        current++;
         int width = GameGrid.Instance.Width;
         int height = GameGrid.Instance.Height;
 
-        if (Index > 0)
+        //left
+        if (Index % width != 0)
         {
             int checkIndex = Index - 1;
-            current = CheckIndex(checkIndex, prev, current);
+            CheckIndex(checkIndex, ref connections);
         }
+        //up
         if (Index + width < (width * height) - 1)
         {
             int checkIndex = Index + width;
-            current = CheckIndex(checkIndex, prev, current);
+            CheckIndex(checkIndex, ref connections);
         }
-        if (Index < (width * height) - 1)
+        //right
+        if (Index % width != width - 1)
         {
             int checkIndex = Index + 1;
-            current = CheckIndex(checkIndex, prev, current);
+            CheckIndex(checkIndex, ref connections);
         }
+        //down
         if (Index - width > 0)
         {
             int checkIndex = Index - width;
-            current = CheckIndex(checkIndex, prev, current);
+            CheckIndex(checkIndex, ref connections);
         }
-
-        return current;
     }
 
-    int CheckIndex(int index, int prev, int current)
+    void CheckIndex(int index, ref List<Tile> connections)
     {
         Tile neighbour = GameGrid.Instance.TheGrid[index];
         if (neighbour.Index != index)
         {
             Debug.LogError($"AAAAAAAAAAAAAAAAAAAAAAAAA sposed: {index} was: {neighbour.Index}");
         }
-        if (prev != index && neighbour.RootedEnemy != null)
+        if (!connections.Contains(neighbour) && neighbour.RootedEnemy != null)
         {
-            return neighbour.MatchedEnemies(current, Index);
+            connections.Add(neighbour);
+            neighbour.MatchedEnemies(ref connections);
         }
-
-        return current;
     }
 
 }

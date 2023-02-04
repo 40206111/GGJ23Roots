@@ -61,8 +61,14 @@ public class EnemyMover : MonoBehaviour
         if (collision.collider.CompareTag("Floor"))
         {
             IsSpawnFalling = false;
-            SetRooted(true);
+            if (!IsRooted)
+                SetRooted(true);
         }
+    }
+
+    public void DefeatEnemy()
+    {
+        Destroy(this.gameObject);
     }
 
 }
