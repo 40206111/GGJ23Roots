@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid : MonoBehaviour
+public class GameGrid : MonoBehaviour
 {
+    public static GameGrid Instance { get; private set; }
+
     [Range(1, 50)]
     [SerializeField] int Width;
     [Range(1, 50)]
@@ -15,6 +17,11 @@ public class Grid : MonoBehaviour
 
     private void Start()
     {
+        if (Instance != null)
+        {
+            Debug.LogError($"Too many {typeof(GameGrid)} instances");
+        }
+        Instance = this;
         GenerateGrid();
     }
 
