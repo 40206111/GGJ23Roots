@@ -29,7 +29,6 @@ public class PlayerMover : MonoBehaviour
         fromCam.y = 0;
         fromCam = fromCam.normalized;
         Vector3 fromCamRight = new Vector3(fromCam.z, 0.0f, -fromCam.x);
-        Debug.Log($"{fromCam} & {fromCamRight}");
 
         Vector3 dir = fromCam * Input.GetAxis("Vertical");
         dir += fromCamRight * Input.GetAxis("Horizontal");
