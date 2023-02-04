@@ -27,7 +27,7 @@ public class EnemyManager
             floorPos.y = -1;
             Vector3 highPos = pos;
             highPos.y += 1;
-            Collider[] hits = Physics.OverlapCapsule(floorPos, highPos, 0.5f);
+            Collider[] hits = Physics.OverlapCapsule(floorPos, highPos, 0.5f, layerMask: (1 << 3));
 
             bool found = false;
             for (int j = 0; j < hits.Length; j++)
