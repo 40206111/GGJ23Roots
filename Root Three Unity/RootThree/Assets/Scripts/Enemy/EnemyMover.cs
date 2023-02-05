@@ -33,11 +33,16 @@ public class EnemyMover : MonoBehaviour
     {
         Body = GetComponent<Rigidbody>();
         Anim = GetComponent<Animator>();
-
+        StartCoroutine(SetNormalTrigger());
     }
-    protected void Start()
+
+    IEnumerator<YieldInstruction> SetNormalTrigger()
     {
-        Anim.SetTrigger("Normal");
+        yield return null;
+        if (Anim.gameObject.activeSelf)
+        {
+            Anim.SetTrigger("Normal");
+        }
     }
 
     // Update is called once per frame
@@ -100,7 +105,11 @@ public class EnemyMover : MonoBehaviour
 
     IEnumerator<YieldInstruction> WaitToDelete(bool doEffects)
     {
-        Anim.SetTrigger("Defeat");
+
+        if (Anim.gameObject.activeSelf)
+        {
+            Anim.SetTrigger("Defeat");
+        }
         yield return new WaitForSeconds(1f);
 
         Destroy(this.gameObject);
