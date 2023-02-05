@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
                 SetState(eGameState.PreStart);
                 break;
             case eGameState.Running:
+                Score.Instance.SetScore(0);
                 StartCoroutine(EnMan.DoInfiniteEnemySpawn());
                 break;
             case eGameState.Ended:

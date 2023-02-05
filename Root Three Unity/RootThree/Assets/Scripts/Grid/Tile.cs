@@ -42,6 +42,7 @@ public class Tile : MonoBehaviour
         if (connected.Count >= 3)
         {
             Debug.Log($"wooh we found a {connected.Count} match!!");
+            Score.Instance.ChangeScore(10 * Mathf.RoundToInt(connected.Count * Mathf.Pow(2, connected.Count - 3)));
             StartCoroutine(WaitToDestroy(connected));
         }
     }
