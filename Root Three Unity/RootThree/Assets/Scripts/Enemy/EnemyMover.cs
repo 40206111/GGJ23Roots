@@ -26,10 +26,13 @@ public class EnemyMover : MonoBehaviour
 
     public eColours Colour;
 
+    Animator Anim;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
         Body = GetComponent<Rigidbody>();
+        Anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -92,7 +95,9 @@ public class EnemyMover : MonoBehaviour
 
     IEnumerator<YieldInstruction> WaitToDelete(bool doEffects)
     {
-        yield return null;
+        Anim.SetTrigger("Defeat");
+        yield return new WaitForSeconds(1f);
+
         Destroy(this.gameObject);
     }
 

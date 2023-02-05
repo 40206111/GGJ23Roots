@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3020451433061125716}
   - component: {fileID: 1764592576462648825}
   - component: {fileID: 319877632074777763}
+  - component: {fileID: 8524986879774840919}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Floor
@@ -112,3 +113,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Coords: {x: 0, y: 0}
   Index: 0
+  RootedEnemy: {fileID: 0}
+--- !u!95 &8524986879774840919
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895152058936597610}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
