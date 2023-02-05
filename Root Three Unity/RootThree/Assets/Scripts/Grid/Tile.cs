@@ -42,7 +42,7 @@ public class Tile : MonoBehaviour
         List<Tile> connected = new List<Tile>();
         connected.Add(this);
         bool scoreBonus = MatchedEnemies(ref connected, RootedEnemy.Colour);
-        Debug.Log($"colour is {RootedEnemy.Colour.ToString()}");
+       
         if (connected.Count >= 3)
         {
             Debug.Log($"wooh we found a {connected.Count} match!! ScoreBonus : {scoreBonus}");
