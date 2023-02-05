@@ -47,3 +47,4 @@ MonoBehaviour:
   TheEnemyData: {fileID: 11400000, guid: 3526b6bccb1f05a459628486645598dc, type: 2}
   PlayerPrefab: {fileID: 390094465514197532, guid: f7d5dc243a4a5dd489ec109165076f23,
     type: 3}
+  TheUI: {fileID: 0}
