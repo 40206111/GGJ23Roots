@@ -388,8 +388,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.6179246, b: 0.6179246, a: 1}
-    m_PressedColor: {r: 0.18177521, g: 1, b: 0, a: 1}
-    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.038314342, g: 0.05949892, b: 0.1981132, a: 1}
+    m_SelectedColor: {r: 0.8546483, g: 0.8584906, b: 0.40899786, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -598,8 +598,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.6179246, b: 0.6179246, a: 1}
-    m_PressedColor: {r: 0.18177521, g: 1, b: 0, a: 1}
-    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.038314342, g: 0.05949892, b: 0.1981132, a: 1}
+    m_SelectedColor: {r: 0.8546483, g: 0.8584906, b: 0.40899786, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -732,8 +732,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.6179246, b: 0.6179246, a: 1}
-    m_PressedColor: {r: 0.18177521, g: 1, b: 0, a: 1}
-    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.038314342, g: 0.05949892, b: 0.1981132, a: 1}
+    m_SelectedColor: {r: 0.8546483, g: 0.8584906, b: 0.40899786, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -755,7 +755,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1692507843166216695}
         m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
-        m_MethodName: UIResumeGame
+        m_MethodName: UIQuitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1157,6 +1157,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 430726625}
   ResumeText: {fileID: 121446619}
   ResumeBtn: {fileID: 498432676}
+  QuitButton: {fileID: 945047746}
 --- !u!1 &1692507843618213735
 GameObject:
   m_ObjectHideFlags: 0

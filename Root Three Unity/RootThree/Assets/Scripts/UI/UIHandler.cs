@@ -16,9 +16,19 @@ public class UIHandler : MonoBehaviour
     [SerializeField]
     GameObject ResumeBtn;
 
+    [SerializeField]
+    GameObject QuitButton;
+
+    bool Paused = false;
+
     private void Awake()
     {
         PressToStartTxt.enabled = false;
+#if PLATFORM_STANDALONE_WIN && !UNITY_EDITOR_WIN
+        QuitButton.SetActive(true);
+#else
+        QuitButton.SetActive(false);
+#endif
     }
 
     private void Start()
@@ -47,9 +57,24 @@ public class UIHandler : MonoBehaviour
                 break;
             case GameManager.eGameState.Paused:
                 PauseMenu.SetActive(true);
+                Paused = true;
+                StartCoroutine(WaitForUnPause());
                 break;
             default:
                 break;
+        }
+
+    }
+
+    IEnumerator<YieldInstruction> WaitForUnPause()
+    {
+        while (Paused)
+        {
+            yield return null;
+            if (Input.GetButtonDown("Pause"))
+            {
+                UIResumeGame();
+            }
         }
 
     }
@@ -59,6 +84,12 @@ public class UIHandler : MonoBehaviour
         GameManager.Instance.UnPause();
         ResumeText.text = "Resume";
         PauseMenu.SetActive(false);
+        Paused = false;
+    }
+
+    public void UIQuitGame()
+    {
+        Application.Quit();
     }
 
 }
