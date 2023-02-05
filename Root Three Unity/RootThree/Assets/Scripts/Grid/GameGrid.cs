@@ -52,7 +52,7 @@ public class GameGrid : MonoBehaviour
                 Vector3 pos = new(x , 0, y);
                 int matInt = Random.Range(0, Colours.Count);
                 Tile newTile = Instantiate(Tile, pos, Quaternion.identity, transform).GetComponent<Tile>();
-                newTile.SetColour(Colours[matInt]);
+                newTile.SetColour(Colours[matInt], (eColours)matInt);
                 newTile.Initialise(x, y);
                 TheGrid.Add(newTile);
             }

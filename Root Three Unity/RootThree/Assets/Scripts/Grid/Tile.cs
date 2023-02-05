@@ -11,6 +11,8 @@ public class Tile : MonoBehaviour
 
     public EnemyMover RootedEnemy;
 
+    eColours Colour;
+
     private void Awake()
     {
         Renderer = GetComponent<MeshRenderer>();
@@ -23,9 +25,10 @@ public class Tile : MonoBehaviour
         Index = y * GameGrid.Instance.Width + x;
     }
 
-    public void SetColour(Material mat)
+    public void SetColour(Material mat, eColours colour)
     {
         Renderer.material = mat;
+        Colour = colour;
     }
 
     public void Root(EnemyMover enemy)
@@ -38,11 +41,13 @@ public class Tile : MonoBehaviour
     {
         List<Tile> connected = new List<Tile>();
         connected.Add(this);
-        MatchedEnemies(ref connected, RootedEnemy.Colour);
+        bool scoreBonus = MatchedEnemies(ref connected, RootedEnemy.Colour);
         if (connected.Count >= 3)
         {
             Debug.Log($"wooh we found a {connected.Count} match!!");
-            Score.Instance.ChangeScore(10 * Mathf.RoundToInt(connected.Count * Mathf.Pow(2, connected.Count - 3)));
+            int score = 10 * Mathf.RoundToInt(connected.Count * Mathf.Pow(2, connected.Count - 3));
+            score = scoreBonus ? score * 2 : score;
+            Score.Instance.ChangeScore(score);
             StartCoroutine(WaitToDestroy(connected));
         }
     }
@@ -58,38 +63,46 @@ public class Tile : MonoBehaviour
         }
     }
 
-    void MatchedEnemies(ref List<Tile> connections, eColours colour)
+    bool MatchedEnemies(ref List<Tile> connections, eColours colour)
     {
         int width = GameGrid.Instance.Width;
         int height = GameGrid.Instance.Height;
+        bool output = false;
+
+        if (colour == Colour)
+        {
+            output |= true;
+        }
 
         //left
         if (Index % width != 0)
         {
             int checkIndex = Index - 1;
-            CheckIndex(checkIndex, ref connections, colour);
+            output |= CheckIndex(checkIndex, ref connections, colour);
         }
         //up
         if (Index + width < (width * height) - 1)
         {
             int checkIndex = Index + width;
-            CheckIndex(checkIndex, ref connections, colour);
+            output |= CheckIndex(checkIndex, ref connections, colour);
         }
         //right
         if (Index % width != width - 1)
         {
             int checkIndex = Index + 1;
-            CheckIndex(checkIndex, ref connections, colour);
+            output |= CheckIndex(checkIndex, ref connections, colour);
         }
         //down
         if (Index - width > 0)
         {
             int checkIndex = Index - width;
-            CheckIndex(checkIndex, ref connections, colour);
+            output |= CheckIndex(checkIndex, ref connections, colour);
         }
+
+        return output;
     }
 
-    void CheckIndex(int index, ref List<Tile> connections, eColours colour)
+    bool CheckIndex(int index, ref List<Tile> connections, eColours colour)
     {
         Tile neighbour = GameGrid.Instance.TheGrid[index];
         if (neighbour.Index != index)
@@ -101,9 +114,11 @@ public class Tile : MonoBehaviour
             if (neighbour.RootedEnemy.Colour.HasFlag(colour))
             {
                 connections.Add(neighbour);
-                neighbour.MatchedEnemies(ref connections, colour);
+                return neighbour.MatchedEnemies(ref connections, colour);
             }
         }
+
+        return false;
     }
 
 }
