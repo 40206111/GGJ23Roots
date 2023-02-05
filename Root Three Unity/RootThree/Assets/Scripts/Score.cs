@@ -17,7 +17,8 @@ public class Score : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI ScoreText;
-    int CurrentScore = 0;
+    int _currentScore = 0;
+    public int CurrentScore { get { return _currentScore; } }
 
     private void Start()
     {
@@ -26,18 +27,18 @@ public class Score : MonoBehaviour
 
     private void RenderScore()
     {
-        ScoreText.text = $"{CurrentScore:n0}";
+        ScoreText.text = $"{_currentScore:n0}";
     }
 
     public void ChangeScore(int value)
     {
-        CurrentScore += value;
+        _currentScore += value;
         RenderScore();
     }
 
     public void SetScore(int value)
     {
-        CurrentScore = value;
+        _currentScore = value;
         RenderScore();
     }
 

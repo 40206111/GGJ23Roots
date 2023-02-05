@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(EnMan.DoInfiniteEnemySpawn());
                 break;
             case eGameState.Ended:
+                HighScores.AddNewScore(Score.Instance.CurrentScore);
                 PlayerAim.HideReticule();
                 StartCoroutine(WaitBeforeSetUp());
                 break;

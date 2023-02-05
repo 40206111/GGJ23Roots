@@ -89,6 +89,7 @@ public class UIHandler : MonoBehaviour
 
     public void UIQuitGame()
     {
+        HighScores.SaveToPrefs();
         Application.Quit();
     }
 
