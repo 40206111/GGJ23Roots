@@ -26,8 +26,15 @@ public class Tile : MonoBehaviour
         }
 
         Material startMat = Renderer.material;
-        while (GameManager.Instance.State == GameManager.eGameState.PreStart)
+        while (GameManager.Instance.State == GameManager.eGameState.PreStart
+               || GameManager.Instance.State == GameManager.eGameState.Paused)
         {
+            if (GameManager.Instance.State == GameManager.eGameState.Paused)
+            {
+                yield return null;
+                continue;
+            }
+
             int colour = Random.Range(0, GameGrid.Instance.Colours.Count);
             Renderer.material = GameGrid.Instance.Colours[colour];
 

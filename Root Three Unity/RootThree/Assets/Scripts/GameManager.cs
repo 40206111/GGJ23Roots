@@ -33,10 +33,12 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public eGameState State {get; private set;}
+    eGameState PrePauseState = eGameState.Uninitialised;
 
 
     private void Awake()
     {
+        Cursor.visible = false;
         if (Instance != null)
         {
             Debug.LogError($"Too many {this.GetType()} instances");
@@ -56,6 +58,18 @@ public class GameManager : MonoBehaviour
         SetState(eGameState.SetUp);
     }
 
+    public void UnPause()
+    {
+        if (PrePauseState == eGameState.Uninitialised)
+        {
+            SetState(eGameState.Running);
+            return;
+        }
+
+        State = PrePauseState;
+        PrePauseState = eGameState.Uninitialised;
+    }
+
 
     private void Update()
     {
@@ -66,14 +80,10 @@ public class GameManager : MonoBehaviour
                 {
                     SetState(eGameState.Running);
                 }
+                CheckForPause();
                 break;
             case eGameState.Running:
-#if UNITY_EDITOR
-                if (Input.GetKeyDown(KeyCode.I))
-                {
-                    EnMan.SpawnEnemies(1);
-                }
-#endif
+                CheckForPause();
                 break;
             default:
                 break;
@@ -88,13 +98,26 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
+    void CheckForPause()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            SetState(eGameState.Paused);
+        }
+
+    }
+
     public void SetState(eGameState state)
     {
         if (State == state) return;
 
+        if (state == eGameState.Paused)
+        {
+            PrePauseState = State;
+        }
+
         State = state;
         TheUI?.UpdateFromGameState(State);
-
         switch (State)
         {
             case eGameState.Uninitialised:
@@ -116,6 +139,7 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
+
     }
 
     IEnumerator<YieldInstruction> WaitBeforeSetUp()
