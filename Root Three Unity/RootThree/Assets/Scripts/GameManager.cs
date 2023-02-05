@@ -95,9 +95,9 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("No don't set Game State to uninitialised! naughty! stop it!");
                 break;
             case eGameState.SetUp:
-                EnMan.Reset();
                 GameGrid.Instance.GenerateGrid();
                 SetState(eGameState.PreStart);
+                Player.SetUp();
                 break;
             case eGameState.Running:
                 Score.Instance.SetScore(0);
@@ -116,8 +116,9 @@ public class GameManager : MonoBehaviour
     {
         yield return null;
         Player.Stop();
+        EnMan.Reset();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         SetState(eGameState.SetUp);
     }
 

@@ -29,10 +29,15 @@ public class EnemyMover : MonoBehaviour
     Animator Anim;
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         Body = GetComponent<Rigidbody>();
         Anim = GetComponent<Animator>();
+
+    }
+    protected void Start()
+    {
+        Anim.SetTrigger("Normal");
     }
 
     // Update is called once per frame

@@ -14,10 +14,18 @@ public class PlayerMover : MonoBehaviour
 
     bool Grounded = false;
 
+    Animator Anim;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Body = GetComponent<Rigidbody>();
+        Anim = GetComponent<Animator>();
+    }
+
+    public void SetUp()
+    {
+        Anim.SetTrigger("Normal");
     }
 
     // Update is called once per frame
@@ -67,6 +75,7 @@ public class PlayerMover : MonoBehaviour
         if (collision.collider.CompareTag("Enemy"))
         {
             GameManager.Instance.SetState(GameManager.eGameState.Ended);
+            Anim.SetTrigger("Defeat");
         }
     }
 }
