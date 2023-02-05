@@ -19,8 +19,11 @@ public static class HighScores
 
     static int MaxScores = 10;
 
+    static bool UsePrefs = true;
+
     public static void AddNewScore(int score)
     {
+        UsePrefs = true;
         _scores.Add(score);
         _scores.Sort((x, y) => x <= y ? 1 : -1);
         while (_scores.Count > MaxScores)
@@ -39,6 +42,10 @@ public static class HighScores
 
     public static void SaveToPrefs()
     {
+        if (!UsePrefs)
+        {
+            return;
+        }
         for (int i = 0; i < _scores.Count; ++i)
         {
             PlayerPrefs.SetInt(PrefsKey(i), _scores[i]);
@@ -48,6 +55,7 @@ public static class HighScores
     public static void ClearScorePrefs()
     {
         PlayerPrefs.DeleteAll();
+        UsePrefs = false;
         //for(int i = 0; i < MaxScores; ++i)
         //{
         //    if (PlayerPrefs.HasKey(PrefsKey(i)))

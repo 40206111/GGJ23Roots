@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour
                 break;
             case eGameState.Ended:
                 HighScores.AddNewScore(Score.Instance.CurrentScore);
+                HighScores.SaveToPrefs();
                 PlayerAim.HideReticule();
                 StartCoroutine(WaitBeforeSetUp());
                 break;
