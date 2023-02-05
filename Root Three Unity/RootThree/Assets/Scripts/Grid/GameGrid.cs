@@ -11,7 +11,7 @@ public class GameGrid : MonoBehaviour
     [Range(1, 50)]
     public int Height;
     [SerializeField] GameObject Tile;
-    [SerializeField] List<Material> Colours = new List<Material>();
+    public List<Material> Colours = new List<Material>();
 
     public List<Tile> TheGrid = new List<Tile>();
 
@@ -54,6 +54,7 @@ public class GameGrid : MonoBehaviour
                 int colourId = ChooseTileColour(x, y);
                 newTile.SetColour(Colours[colourId], (eColours)(1 << colourId));
                 newTile.Initialise(x, y);
+                StartCoroutine(newTile.Waiting());
                 TheGrid.Add(newTile);
             }
         }

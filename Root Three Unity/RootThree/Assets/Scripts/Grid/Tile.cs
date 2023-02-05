@@ -18,6 +18,25 @@ public class Tile : MonoBehaviour
         Renderer = GetComponent<MeshRenderer>();
     }
 
+    public IEnumerator<YieldInstruction> Waiting()
+    {
+        while (GameManager.Instance.State == GameManager.eGameState.SetUp)
+        {
+            yield return null;
+        }
+
+        Material startMat = Renderer.material;
+        while (GameManager.Instance.State == GameManager.eGameState.PreStart)
+        {
+            int colour = Random.Range(0, GameGrid.Instance.Colours.Count);
+            Renderer.material = GameGrid.Instance.Colours[colour];
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        Renderer.material = startMat;
+    }
+
     public void Initialise(int x, int y)
     {
         Coords = new Vector2Int(x, y);
