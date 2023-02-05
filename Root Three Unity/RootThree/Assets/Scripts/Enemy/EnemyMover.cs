@@ -84,8 +84,15 @@ public class EnemyMover : MonoBehaviour
         }
     }
 
-    public void DefeatEnemy()
+    public void DefeatEnemy(bool doEffects = true)
     {
+        GameManager.Instance.EnemyDestroyed(this);
+        StartCoroutine(WaitToDelete(doEffects));
+    }
+
+    IEnumerator<YieldInstruction> WaitToDelete(bool doEffects)
+    {
+        yield return null;
         Destroy(this.gameObject);
     }
 

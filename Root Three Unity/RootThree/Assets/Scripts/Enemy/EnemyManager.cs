@@ -8,10 +8,26 @@ public class EnemyManager
     EnemyData EnData;
 
     public List<EnemyMover> ActiveEnemies = new List<EnemyMover>();
+    public List<EnemyMover> RootedEnemies = new List<EnemyMover>();
 
     public EnemyManager(EnemyData enData)
     {
         EnData = enData;
+    }
+
+    public void Reset()
+    {
+        for (int i = 0; i < ActiveEnemies.Count; i++)
+        {
+            ActiveEnemies[i].DefeatEnemy(doEffects: false);
+        }
+        for (int i = 0; i < RootedEnemies.Count; )
+        {
+            RootedEnemies[i].DefeatEnemy(doEffects: false);
+        }
+
+        ActiveEnemies.Clear();
+        RootedEnemies.Clear();
     }
 
     public IEnumerator<YieldInstruction> DoInfiniteEnemySpawn()
@@ -21,6 +37,7 @@ public class EnemyManager
 
         while (GameManager.Instance.State != GameManager.eGameState.Ended)
         {
+            yield return null;
             if (GameManager.Instance.State != GameManager.eGameState.Running)
             {
                 continue;
@@ -36,7 +53,6 @@ public class EnemyManager
                 timePassed = 0;
             }
 
-            yield return null;
         }
     }
 

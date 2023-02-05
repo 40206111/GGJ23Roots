@@ -23,7 +23,11 @@ public class PlayerMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.State != GameManager.eGameState.Running) return;
+        if (GameManager.Instance.State != GameManager.eGameState.Running)
+        {
+            Body.velocity = Vector3.zero;
+            return;
+        }
 
         if (Camera == null)
         {
@@ -46,12 +50,23 @@ public class PlayerMover : MonoBehaviour
         Body.velocity = dir * MoveSpeed * (Input.GetButton("Walk") ? WalkSpeedPercentage : 1f);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void Stop()
     {
-        if (!Grounded && collision.collider.CompareTag("Floor"))
+        Body.velocity = Vector3.zero;
+    }
+
+    protected void OnCollisionEnter(Collision collision)
+    {
+    	if (!Grounded && collision.collider.CompareTag("Floor"))
         {
             Grounded = true;
             Body.constraints = RigidbodyConstraints.FreezePositionY | Body.constraints;
+        }
+        if (GameManager.Instance.State != GameManager.eGameState.Running) return;
+
+        if (collision.collider.CompareTag("Enemy"))
+        {
+            GameManager.Instance.SetState(GameManager.eGameState.Ended);
         }
     }
 }

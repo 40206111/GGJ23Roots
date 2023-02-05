@@ -37,6 +37,8 @@ public class PlayerAimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.State != GameManager.eGameState.Running) return;
+        
         Timer += Time.deltaTime;
 
         if (CurrentTarget != null && Input.GetButtonDown("Root"))
@@ -121,7 +123,7 @@ public class PlayerAimer : MonoBehaviour
         }
     }
 
-    void HideReticule()
+    public void HideReticule()
     {
         Reticule.parent = null;
         Reticule.position = FloorPos + Vector3.down * 0.5f;

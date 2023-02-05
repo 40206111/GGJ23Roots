@@ -15,9 +15,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject PlayerPrefab;
     PlayerMover Player;
+    PlayerAimer PlayerAim;
 
     public enum eGameState
     {
+        Uninitialised,
         SetUp,
         PreStart,
         Paused,
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour
     }
 
     [HideInInspector]
-    public eGameState State = eGameState.SetUp;
+    public eGameState State {get; private set;}
 
 
     private void Awake()
@@ -41,25 +43,24 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         EnMan = new EnemyManager(TheEnemyData);
-        State = eGameState.SetUp;
+        StartCoroutine(WaitForFirstTimeSetUp());
+    }
+
+    IEnumerator<YieldInstruction> WaitForFirstTimeSetUp()
+    {
+        yield return null;
+        SetState(eGameState.SetUp);
     }
 
 
     private void Update()
     {
-
         switch (State)
         {
-            case eGameState.SetUp:
-                GameGrid.Instance.GenerateGrid();
-                State = eGameState.PreStart;
-                break;
-
             case eGameState.PreStart:
                 if (Input.GetButtonDown("Root"))
                 {
-                    State = eGameState.Running;
-                    StartCoroutine(EnMan.DoInfiniteEnemySpawn());
+                    SetState(eGameState.Running);
                 }
                 break;
             case eGameState.Running:
@@ -83,11 +84,51 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
+    public void SetState(eGameState state)
+    {
+        if (State == state) return;
+
+        State = state;
+        switch (State)
+        {
+            case eGameState.Uninitialised:
+                Debug.LogError("No don't set Game State to uninitialised! naughty! stop it!");
+                break;
+            case eGameState.SetUp:
+                EnMan.Reset();
+                GameGrid.Instance.GenerateGrid();
+                SetState(eGameState.PreStart);
+                break;
+            case eGameState.Running:
+                StartCoroutine(EnMan.DoInfiniteEnemySpawn());
+                break;
+            case eGameState.Ended:
+                PlayerAim.HideReticule();
+                StartCoroutine(WaitBeforeSetUp());
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator<YieldInstruction> WaitBeforeSetUp()
+    {
+        yield return null;
+        Player.Stop();
+
+        yield return new WaitForSeconds(0.2f);
+        SetState(eGameState.SetUp);
+    }
+
     public void GridReadyForPlayer()
     {
         if (Player == null)
         {
             Player = Instantiate(PlayerPrefab).GetComponent<PlayerMover>();
+        }
+        if (PlayerAim == null)
+        {
+            PlayerAim = Player.GetComponent<PlayerAimer>();
         }
 
         float halfWidth = (GameGrid.Instance.Width - 1) * 0.5f;
@@ -98,7 +139,13 @@ public class GameManager : MonoBehaviour
 
     public void EnemyRooted(EnemyMover enemy)
     {
+        EnMan.RootedEnemies.Add(enemy);
         EnMan.ActiveEnemies.Remove(enemy);
+    }
+
+    public void EnemyDestroyed(EnemyMover enemy)
+    {
+        EnMan.RootedEnemies.Remove(enemy);
     }
 
 }
