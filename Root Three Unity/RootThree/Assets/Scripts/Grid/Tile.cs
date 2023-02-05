@@ -42,9 +42,10 @@ public class Tile : MonoBehaviour
         List<Tile> connected = new List<Tile>();
         connected.Add(this);
         bool scoreBonus = MatchedEnemies(ref connected, RootedEnemy.Colour);
+        Debug.Log($"colour is {RootedEnemy.Colour.ToString()}");
         if (connected.Count >= 3)
         {
-            Debug.Log($"wooh we found a {connected.Count} match!!");
+            Debug.Log($"wooh we found a {connected.Count} match!! ScoreBonus : {scoreBonus}");
             int score = 10 * Mathf.RoundToInt(connected.Count * Mathf.Pow(2, connected.Count - 3));
             score = scoreBonus ? score * 2 : score;
             Score.Instance.ChangeScore(score);
@@ -69,7 +70,7 @@ public class Tile : MonoBehaviour
         int height = GameGrid.Instance.Height;
         bool output = false;
 
-        if (colour == Colour)
+        if (Colour.HasFlag(colour))
         {
             output |= true;
         }

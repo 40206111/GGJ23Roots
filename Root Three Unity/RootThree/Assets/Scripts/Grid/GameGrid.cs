@@ -50,9 +50,9 @@ public class GameGrid : MonoBehaviour
             for (int x = 0; x < Width; x++)
             {
                 Vector3 pos = new(x , 0, y);
-                int matInt = Random.Range(0, Colours.Count);
                 Tile newTile = Instantiate(Tile, pos, Quaternion.identity, transform).GetComponent<Tile>();
-                newTile.SetColour(Colours[matInt], (eColours)matInt);
+                int colourId = ChooseTileColour(x, y);
+                newTile.SetColour(Colours[colourId], (eColours)(1 << colourId));
                 newTile.Initialise(x, y);
                 TheGrid.Add(newTile);
             }
@@ -74,6 +74,28 @@ public class GameGrid : MonoBehaviour
         ConfigurePlane(PlaneBack, backPos, scaleOnX);
         ConfigurePlane(PlaneRight, rightPos, scaleOnZ);
         ConfigurePlane(PlaneLeft, leftPos, scaleOnZ);
+    }
+
+    int ChooseTileColour(int x, int y)
+    {
+        int output = 0;
+
+        bool isNeutral = Random.Range(0, 2) == 1;
+
+        if (isNeutral ||
+            y % Height == Height - 1 ||
+            y == 0 ||
+            x % Width == Width - 1 ||
+            x == 0)
+        {
+            output = 0;
+        }
+        else
+        {
+            output = Random.Range(1, Colours.Count);
+        }
+
+        return output;
     }
 
     void ConfigurePlane(Transform plane, Vector3 pos, Vector3 scale)
