@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
         yield return null;
         Player.Stop();
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         SetState(eGameState.SetUp);
     }
 

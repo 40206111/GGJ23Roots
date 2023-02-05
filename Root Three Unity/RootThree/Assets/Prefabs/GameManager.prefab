@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b769518108f373749b75120384579028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TheEnemyData: {fileID: 11400000, guid: c12f628250e4a1c439989ac701a4f5ab, type: 2}
+  TheEnemyData: {fileID: 11400000, guid: 3526b6bccb1f05a459628486645598dc, type: 2}
   PlayerPrefab: {fileID: 390094465514197532, guid: f7d5dc243a4a5dd489ec109165076f23,
     type: 3}

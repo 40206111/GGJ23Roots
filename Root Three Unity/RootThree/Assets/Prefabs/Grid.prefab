@@ -242,8 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a473fec189bf848bb06be50bf8db41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Width: 10
-  Height: 10
+  Width: 15
+  Height: 15
   Tile: {fileID: 8895152058936597610, guid: e98ae6ad78e03ad4ab92de1abe84e9cc, type: 3}
   Colours:
   - {fileID: 2100000, guid: 5cbaadbf2db20374c9f468dc5128d4ce, type: 2}
