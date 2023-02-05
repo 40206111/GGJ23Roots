@@ -10,6 +10,8 @@ public class EnemyManager
     public List<EnemyMover> ActiveEnemies = new List<EnemyMover>();
     public List<EnemyMover> RootedEnemies = new List<EnemyMover>();
 
+    float TotalSpawnTime = 0;
+
     public EnemyManager(EnemyData enData)
     {
         EnData = enData;
@@ -28,12 +30,17 @@ public class EnemyManager
 
         ActiveEnemies.Clear();
         RootedEnemies.Clear();
+        TotalSpawnTime = 0;
     }
 
     public IEnumerator<YieldInstruction> DoInfiniteEnemySpawn()
     {
         float timePassed = 0;
-        float spawnTime = Random.Range(EnData.MinSpawDelay, EnData.MaxSpawDelay);
+
+        float minDelay = EnData.MaxMinSpawDelay; 
+        float maxDelay = EnData.MaxMaxSpawDelay;
+
+        float spawnTime = Random.Range(minDelay, maxDelay);
 
         while (GameManager.Instance.State != GameManager.eGameState.Ended)
         {
@@ -49,10 +56,14 @@ public class EnemyManager
             {
                 SpawnEnemies(1);
 
-                spawnTime = Random.Range(EnData.MinSpawDelay, EnData.MaxSpawDelay);
+                float progress = 1 - (TotalSpawnTime / EnData.TimeToMaxDifficulty);
+                minDelay = EnData.MinMinSpawDelay + progress * (EnData.MaxMinSpawDelay - EnData.MinMinSpawDelay);
+                maxDelay = EnData.MinMaxSpawDelay + progress * (EnData.MaxMaxSpawDelay - EnData.MinMaxSpawDelay);
+                spawnTime = Random.Range(minDelay, maxDelay);
                 timePassed = 0;
             }
-
+            TotalSpawnTime += Time.deltaTime;
+            TotalSpawnTime = Mathf.Clamp(TotalSpawnTime, TotalSpawnTime, EnData.TimeToMaxDifficulty);
         }
     }
 

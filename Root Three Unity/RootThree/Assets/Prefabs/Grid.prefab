@@ -246,6 +246,7 @@ MonoBehaviour:
   Height: 15
   Tile: {fileID: 8895152058936597610, guid: e98ae6ad78e03ad4ab92de1abe84e9cc, type: 3}
   Colours:
+  - {fileID: 2100000, guid: 37e378eaff1a1d547891c13ebd79084f, type: 2}
   - {fileID: 2100000, guid: 5cbaadbf2db20374c9f468dc5128d4ce, type: 2}
   - {fileID: 2100000, guid: 231369b395ccc5d4aa86c3627ad7c9ee, type: 2}
   - {fileID: 2100000, guid: bf6274c79d2757946afa2d0cc168a387, type: 2}

@@ -27,5 +27,8 @@ MonoBehaviour:
   - {fileID: 7211332033681411059, guid: 0c49b64631477da459a4d7f712710632, type: 3}
   FallHeight: 10
   SpawnAttempts: 100
-  MinSpawDelay: 4
-  MaxSpawDelay: 8
+  MaxMinSpawDelay: 10
+  MaxMaxSpawDelay: 15
+  MinMinSpawDelay: 2
+  MinMaxSpawDelay: 5
+  TimeToMaxDifficulty: 300

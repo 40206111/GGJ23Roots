@@ -11,7 +11,11 @@ public class EnemyData : ScriptableObject
 
     public int SpawnAttempts;
 
-    public float MinSpawDelay;
-    public float MaxSpawDelay;
+    public float MaxMinSpawDelay;
+    public float MaxMaxSpawDelay;
+    public float MinMinSpawDelay;
+    public float MinMaxSpawDelay;
+
+    public float TimeToMaxDifficulty;
 
 }
