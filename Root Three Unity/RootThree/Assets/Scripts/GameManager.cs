@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
     PlayerMover Player;
     PlayerAimer PlayerAim;
 
+    //UI Stuff
+    [SerializeField]
+    UIHandler TheUI;
+
     public enum eGameState
     {
         Uninitialised,
@@ -89,6 +93,8 @@ public class GameManager : MonoBehaviour
         if (State == state) return;
 
         State = state;
+        TheUI?.UpdateFromGameState(State);
+
         switch (State)
         {
             case eGameState.Uninitialised:
