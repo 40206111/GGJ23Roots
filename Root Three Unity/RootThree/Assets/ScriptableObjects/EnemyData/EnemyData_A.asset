@@ -13,9 +13,19 @@ MonoBehaviour:
   m_Name: EnemyData_A
   m_EditorClassIdentifier: 
   prefabs:
+  - {fileID: 7030657837119554614, guid: 9092885f4be76da478b812b13f2fea75, type: 3}
+  - {fileID: 7030657837119554614, guid: 06d699e1f33669f4a8c303423d0463c2, type: 3}
+  - {fileID: 7030657837119554614, guid: 5b30efbf9307f1c4fb871b511d7e29f8, type: 3}
+  - {fileID: 7030657837119554614, guid: b7a983153847ac844b62407c6cee9236, type: 3}
+  - {fileID: 7030657837119554614, guid: f398a3f497c245f49a4121e1354d93db, type: 3}
   - {fileID: 7030657837119554614, guid: 5b453b08ad1a46348a0be1fb65b0ca48, type: 3}
+  - {fileID: 7211332033681411059, guid: bf4ec621956566346a306e198011d9eb, type: 3}
+  - {fileID: 7211332033681411059, guid: 0fb2675f228c3334bbde10a5d24d4677, type: 3}
+  - {fileID: 7211332033681411059, guid: d15368dc29431d9489d1925704561439, type: 3}
+  - {fileID: 7211332033681411059, guid: d86c8e06fa5a8ed4f95c9a4c6d2af0fe, type: 3}
+  - {fileID: 7211332033681411059, guid: 84b482d8302717b46b7f3cb4983e69c9, type: 3}
   - {fileID: 7211332033681411059, guid: 0c49b64631477da459a4d7f712710632, type: 3}
-  FallHeight: 3
+  FallHeight: 10
   SpawnAttempts: 100
   MinSpawDelay: 2
   MaxSpawDelay: 5

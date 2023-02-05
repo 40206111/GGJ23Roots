@@ -17,7 +17,7 @@ public class EnemyMover : MonoBehaviour
     protected PlayerMover Player;
     protected Rigidbody Body;
     [SerializeField]
-    protected float Speed = 5f;
+    protected EnemyMovementData MoveData;
 
     protected bool IsSpawnFalling = true;
     public bool GetIsSpawnFalling { get { return IsSpawnFalling; } }
@@ -51,7 +51,7 @@ public class EnemyMover : MonoBehaviour
         {
             Vector3 chase = TargettingDirection();
 
-            Body.velocity = chase * Speed;
+            Body.velocity = chase * MoveData.Speed;
         }
     }
 

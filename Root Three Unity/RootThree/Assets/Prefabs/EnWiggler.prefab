@@ -62,8 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4182e8f654edf364b81a8176ab86da71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
-  Colour: 16
+  MoveData: {fileID: 11400000, guid: ae075f4c284d04f47b63eeb3ca739d87, type: 2}
+  Colour: 64
 --- !u!1 &8844583543769843699
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: efdca5651499a3c4798a9a3cb6b40590, type: 2}
+  - {fileID: 2100000, guid: 8889f2292c2c44349b836aee4b74ad65, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -158,7 +158,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
