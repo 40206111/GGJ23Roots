@@ -10,18 +10,24 @@ public class CameraResize : MonoBehaviour
     [SerializeField]
     AnimationCurve Curve;
 
-    // 1x1 (x,y,z) (-1, 2, -1)
-    //10x10 (x,y,z) (-2, 7, -2)
-    Vector3 Pos1x1 = new Vector3(-1, 2, -1);
+    // 1x1 (x,y,z) (-0.5, 2, -0.5)
+    //10x10 (x,y,z) (-0.5, 13, -0,5)
+    Vector3 Pos1x1 = new Vector3(-0.5f, 2, -0.5f);
     Vector3 TargetPos;
+
+    public void Awake()
+    {
+        transform.position = Pos1x1;
+        Vector3 rotation = new Vector3(60, 45, 0);
+        transform.rotation = Quaternion.Euler(rotation);
+    }
 
     public void ResizeCamera(int width, int height)
     {
         int size = Mathf.Max(width, height);
-        float widthChange = size * 0.1f;
-        float heightChange = size * 0.5f;
+        float heightChange = size;
 
-        TargetPos = new Vector3(Pos1x1.x - widthChange, Pos1x1.y + heightChange, Pos1x1.z - widthChange);
+        TargetPos = new Vector3(Pos1x1.x, Pos1x1.y + heightChange, Pos1x1.z);
         StartCoroutine(MoveCamera());
     }
 
