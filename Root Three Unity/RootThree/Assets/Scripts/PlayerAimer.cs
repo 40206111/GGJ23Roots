@@ -35,7 +35,7 @@ public class PlayerAimer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (GameManager.Instance.State != GameManager.eGameState.Running) return;
         
